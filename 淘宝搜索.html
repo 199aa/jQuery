@@ -68,15 +68,6 @@
                 })
             }
 
-            function rendersuggestList(res) {
-                if (res.result.length <= 0) {
-                    return $('#suggest-list').empty().hide();
-                }
-                var htmlstr = template('tpl-suggestList', res);
-                $('#suggest-list').html(htmlstr).show();
-                var k = $('.ipt').val().trim();
-                cashObj[k] = res;
-            }
 
             function debouncesearch(kw) {
                 timer = setTimeout(function() {
