@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/Ajax/js/template-web.js"></script>
+    <script src="/Ajax/js/jquery-1.12.4.min.js"></script>
+</head>
+
+<body>
+    <div id="daye-user"></div>
+    <script type="text/html" id="ad-user">
+        <div>姓名：{{name}}</div>
+        <div>年龄：{{age}}</div>
+        <div>住址：{{address}}</div>
+        <div>性别：{{sex}}</div>
+    </script>
+    <script>
+        data = {
+            name: '张三丰',
+            age: 18,
+            address: '河南省开封市',
+            sex: '男'
+        }
+        htmlstr = template('ad-user', data);
+        document.querySelector('#daye-user').innerHTML = htmlstr;
+    </script>
+</body>
+<script src="/Ajax/js/template.js"></script>
+
+</html>

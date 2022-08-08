@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/Ajax/css/news.css">
+    <script src="/jQuery/js/jquery.min.js"></script>
+    <script src="/Ajax/js/template-web.js"></script>
+</head>
+
+<body>
+
+    <div id="news-list">
+
+    </div>
+
+</body>
+<script type="text/html" id="tpl-news">
+    {{each data}}
+    <div class="news-item">
+        <img class="thumb" src='{{ "http://www.liulongbin.top:3006/api/news"+$value.img}}' alt="" />
+        <div class="right-box">
+            <h1 class="title">{{$value.title}}</h1>
+            <div class="tags">
+                {{each $value.tags}}
+                <span>{{$value}}</span> {{/each}}
+            </div>
+            <div class="footer">
+                <div>
+                    <span>{{$value.source}}</span>&nbsp;&nbsp;
+                    <span>{{$value.time|DateFormat}}</span>
+                </div>
+                <span>评论数：{{$value.cmtcount}}</span>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</script>
+<script>
+    $(function() {
+        template.defaults.imports.DateFormat = function() {
+            var dt = new Date();
+            var y = dt.getFullYear();
+            var m = dt.getMonth() + 1;
+            m = m < 10 ? '0' + m : m;
+
+            var d = dt.getDate();
+            d = d < 10 ? '0' + d : d;
+
+            var h = dt.getHours();
+            h = h < 10 ? '0' + h : h;
+            var mts = dt.getMinutes();
+            mts = mts < 10 ? '0' + mts : mts;
+            var s = dt.getSeconds();
+            s = s < 10 ? '0' + s : s;
+
+            return y + '-' + m + '-' + d + ' ' + h + ':' + mts + ':' + s
+        }
+
+        function getNewsList() {
+            $.get('http://www.liulongbin.top:3006/api/news', function(res) {
+                if (res.status !== 200) {
+                    return alert('获取新闻列表数据失败！')
+                }
+                for (var i = 0; i < res.data.length; i++) {
+                    // 把每一项的 tags 属性，从字符串改造成字符串的数组
+                    res.data[i].tags = res.data[i].tags.split(',')
+                }
+                console.log(res)
+                var htmlStr = template('tpl-news', res)
+                $('#news-list').html(htmlStr)
+            })
+        }
+
+        getNewsList()
+
+    })
+</script>
+
+</html>

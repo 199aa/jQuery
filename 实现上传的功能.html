@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<link rel="stylesheet" href="/日常练习2/css/bootstrap.min.css">
+<script src="/日常练习2/js/jquery.min.js"></script>
+
+<body>
+
+    <input type="file" name="file" id="file">
+    <button id="btn">上传文件</button>
+    <img src="" alt="" id="img" width="400">
+    <div class="progress" style="width: 450px; margin: 20px 20px;">
+        <div class="progress-bar progress-bar-success active" style="width: 0%" id="persent">
+            0%
+        </div>
+    </div>
+    <script>
+        var btn = document.querySelector('#btn');
+
+        btn.addEventListener('click', function() {
+            var files = document.querySelector('#file').files
+
+            if (files.length <= 0) {
+                return alert('请上传文件')
+
+            } else {
+                var jd = new FormData();
+                jd.append('avatar', files[0])
+                var xtr = new XMLHttpRequest();
+                xtr.upload.onprogress = function(e) {
+                    if (e.lengthComputable) {
+                        var procentComplete = Math.ceil((e.loaded / e.total) * 100)
+                        $('#persent').attr('style', 'width:' + procentComplete + '%; ').html(procentComplete)
+                    }
+                }
+                xtr.upload.onload = function() {
+                    $('#persent').removeClass().addClass('progress-bar  progress-bar-success')
+                }
+                xtr.open('post', 'http://www.liulongbin.top:3006/api/upload/avatar')
+                xtr.send(jd)
+                xtr.onreadystatechange = function() {
+                    if (xtr.readyState == 4 && xtr.status == 200) {
+                        var data = JSON.parse(xtr.responseText)
+                        if (data.status == 200) {
+                            document.querySelector('#img').src = 'http://www.liulongbin.top:3006' + data.url
+
+                        } else {
+                            console.log('图片上传失败' + data.message);
+                        }
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

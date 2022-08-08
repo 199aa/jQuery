@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/jQuery/js/jquery.min.js"></script>
+</head>
+
+<body>
+
+</body>
+<script>
+    // var xhr = new XMLHttpRequest();
+    // xhr.open('post', 'http://www.liulongbin.top:3006/api/addbook');
+    // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    // xhr.send('bookname=水浒传&author=施耐庵&publisher=天津图书出版社');
+    // xhr.onreadystatechange = function() {
+    //     if (xhr.readyState == 4 && xhr.status == 200) {
+    //         console.log(xhr.responseText);
+    //     }
+    // }
+    var xtr = new XMLHttpRequest();
+    xtr.open('get', 'http://www.liulongbin.top:3006/api/getbooks');
+    //请求时间
+    xtr.timeout = 3000
+    xtr.ontimeout = function() {
+        console.log('请求超时了！')
+    }
+    xtr.send();
+    xtr.onreadystatechange = function() {
+        if (xtr.State == 4 && xtr.status == 200) {
+            console.log(JSON.parse(xtr.responseText));
+
+        }
+        console.log(xtr.responseText);
+    }
+</script>
+
+</html>

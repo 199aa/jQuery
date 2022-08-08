@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/Ajax/js/template-web.js"></script>
+    <script src="/jQuery/js/jquery.min.js"></script>
+</head>
+
+<body>
+    <div id="content"></div>
+    <script type="text/html" id="count">
+        <p>姓名：{{name}}</p>
+        <p>年龄：{{age}}</p>
+        <p>爱好：{{@ hobby}}</p>
+        <div>
+            {{if(flag==0)}} 我是傻瓜 {{else}} 你是傻瓜 {{/if}}
+        </div>
+        <ul>
+            {{each hobby}}
+            <li> {{$index}} {{$value}} </li>
+            {{/each}}
+        </ul>
+    </script>
+    <script>
+        data = {
+            name: '张三',
+            age: 18,
+            hobby: ['唱', '跳', 'rab', '篮球'],
+            flag: 1
+        }
+        var htmlstr = template('count', data)
+
+        $('#content').html(htmlstr)
+    </script>
+
+</body>
+
+</html>

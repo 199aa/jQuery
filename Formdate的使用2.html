@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form id="form" autocomplete="off">
+        <input type="text" name="uname" id="uname">
+        <input type="password" name="upd" id="upd">
+        <input type="submit" value="提交">
+    </form>
+</body>
+<script>
+    var form = document.querySelector('#form');
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var jd = new FormData(form);
+
+        var xtr = new XMLHttpRequest();
+        xtr.open('post', 'http://www.liulongbin.top:3006/api/formdata');
+        xtr.send(jd);
+        xtr.onreadystatechange = function() {
+            if (xtr.readyState == 4 && xtr.status == 200) {
+                console.log(JSON.parse(xtr.responseText));
+            }
+        }
+    })
+</script>
+
+</html>
